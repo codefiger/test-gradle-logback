@@ -1,5 +1,7 @@
 package com.zpeng.utils;
 
+import java.util.Random;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,5 +18,9 @@ public class LoggerDemo {
 		logger.error("error log content");
 		
 		//LoggerBean loggerBean = new LoggerBean();
+		Random random = new Random();
+		int randomNum = random.nextInt();
+		System.out.println(randomNum);
+		System.out.println(String.format("%08x", randomNum));
 	}
 }
