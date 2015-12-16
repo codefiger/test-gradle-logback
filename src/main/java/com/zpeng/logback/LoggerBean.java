@@ -3,7 +3,6 @@ package com.zpeng.logback;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
 public class LoggerBean {
 	public static final Logger logger = LoggerFactory.getLogger(LoggerBean.class);
 	
