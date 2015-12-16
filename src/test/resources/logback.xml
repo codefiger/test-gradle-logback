@@ -20,11 +20,39 @@
 	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">   
    		<!-- encoder 默认配置为PatternLayoutEncoder -->   
 	    <encoder>   
-	      <pattern>${timeFormat} [%thread] %-5level %logger{36} - %msg%n</pattern>   
+	      <pattern>[${timeFormat}] [%thread] %-5level %logger{36} - %msg%n</pattern>   
 	    </encoder>   
  	</appender> 
  	
- 	<root level="INFO">             
+ 	<appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<File>${LOG_DIR}/test-gradle-logback.log</File>
+		<rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+			<fileNamePattern>${LOG_DIR}/test-gradle-logback-%i.log</fileNamePattern>
+			<minIndex>1</minIndex>
+			<maxIndex>30</maxIndex>
+		</rollingPolicy>
+		<triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+			<maxFileSize>100MB</maxFileSize>
+		</triggeringPolicy>
+		<encoder charset="UTF-8">
+			<Pattern>[%d{yyyy-MM-dd HH:mm:ss}] [%4level] [%logger{50}]  -> %msg %n%ex</Pattern>
+		</encoder>
+	</appender>
+	
+	<appender name ="FILE_ASYN" class= "ch.qos.logback.classic.AsyncAppender">
+		<discardingThreshold >0</discardingThreshold>
+		<appender-ref ref ="FILE"/>
+	</appender>
+ 	
+ 	<!-- 未设置打印级别，所以继承他上级<root>的日志级别；没有设置addtivity，默认为true，将此loger的打印信息向上级传递,测试即使false向上级传递-->
+ 	<logger name="com.zpeng.utils.LoggerDemo" level="info" addtivity="false">
+ 		<appender-ref ref="FILE" />   
+ 	</logger>
+ 
+ 	<logger name="com.zpeng.utils" level="error" addtivity="false">
+ 	</logger>
+ 	
+ 	<root level="error">             
 	    <appender-ref ref="STDOUT" />   
 	</root>  
 </configuration>

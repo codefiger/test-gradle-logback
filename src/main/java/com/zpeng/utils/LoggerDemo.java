@@ -3,6 +3,8 @@ package com.zpeng.utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.zpeng.logback.LoggerBean;
+
 public class LoggerDemo {
 	public static final Logger logger = LoggerFactory.getLogger(LoggerDemo.class);
 	
@@ -12,5 +14,7 @@ public class LoggerDemo {
 		logger.info("info log content");
 		logger.warn("warn log content");
 		logger.error("error log content");
+		
+		//LoggerBean loggerBean = new LoggerBean();
 	}
 }
