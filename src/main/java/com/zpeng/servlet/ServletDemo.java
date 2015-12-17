@@ -8,10 +8,18 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.thrift.TException;
+import org.apache.thrift.protocol.TBinaryProtocol;
+import org.apache.thrift.protocol.TProtocol;
+import org.apache.thrift.transport.TSocket;
+import org.apache.thrift.transport.TTransport;
+import org.apache.thrift.transport.TTransportException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.zpeng.common.Constants;
+import com.zpeng.thrift.AdditionService;
+import com.zpeng.thrift.MyServer;
 
 /**
  * 好久没写过servelt,jsp，重温下
@@ -31,8 +39,25 @@ public class ServletDemo extends HttpServlet{
 		logger.debug("testServlet service.");
 		performance_logger.info("开始：{}", new Date());
 		long startTimesatmp = System.currentTimeMillis();
+		
+		try {  
+			TTransport transport = new TSocket("localhost", MyServer.PORT);  
+			transport.open();  
+	   
+			TProtocol protocol = new TBinaryProtocol(transport);  
+			AdditionService.Client client = new AdditionService.Client(protocol);  
+	   
+			logger.info("101+200 result:{}",client.add(101, 200));  
+	   
+			transport.close();  
+		} catch (TTransportException e) {  
+			e.printStackTrace();  
+		} catch (TException x) {  
+			x.printStackTrace();  
+		}  
+		
 		request.setAttribute("name", "figer");
-		request.getRequestDispatcher("/index.jsp").forward(request, response);
+		request.getRequestDispatcher("/WEB-INF/jsp/index.jsp").forward(request, response);
 		performance_logger.info("结束：{}ms", System.currentTimeMillis() - startTimesatmp);
 	}
 
