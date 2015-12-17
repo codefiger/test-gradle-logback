@@ -4,6 +4,7 @@ import java.util.Random;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.slf4j.MarkerFactory;
 
 import com.zpeng.logback.LoggerBean;
 
@@ -21,6 +22,8 @@ public class LoggerDemo {
 		logger.warn("warn log content");
 		logger.error("error log content");
 		logger.info("{},it's OK.","Hi");//参数化
+		logger.info(MarkerFactory.getMarker("p2"), "value:{}", 1111);
+		logger.info(MarkerFactory.getMarker("marker has niao yong?"), "value:{}", 22222);
 		
 		LoggerBean loggerBean = new LoggerBean();
 		Random random = new Random();
