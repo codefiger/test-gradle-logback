@@ -9,7 +9,18 @@ Logback默认配置的步骤:
      (2). 如果文件不存在，则查找文件 logback.xml；
 
      (3). 如果两个文件都不存在，logback 用 BasicConfigurator 自动对自己进行配置，这会导致记录输出到控制
+     
+     details:
+   
+    (1)Logback tries to find a file called logback.groovy in the classpath.
 
+    (2)If no such file is found, logback tries to find a file called logback-test.xml in the classpath.
+
+    (3)If no such file is found, it checks for the file logback.xml in the classpath..
+
+    (4)If no such file is found, and the executing JVM has the ServiceLoader (JDK 6 and above) the ServiceLoader will be used to resolve an implementation of com.qos.logback.classic.spi.Configurator. The first implementation found will be used. See ServiceLoader documentation for more details.
+
+    (5)If none of the above succeeds, logback configures itself automatically using the BasicConfigurator which will cause logging output to be directed to the console.
  -->
 
 <!-- 
