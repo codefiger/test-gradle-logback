@@ -101,7 +101,7 @@ Logback默认配置的步骤:
  	<logger name="com.zpeng.utils" level="error" addtivity="false">
  	</logger>
  	
- 	<root level="error">             
+ 	<root level="debug">             
 	    <appender-ref ref="STDOUT" />   
 	</root>  
 </configuration>
