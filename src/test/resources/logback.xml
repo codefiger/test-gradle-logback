@@ -58,7 +58,22 @@ Logback默认配置的步骤:
        </layout> 
     </appender>   
  	
- 	<appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+ 	<appender name="PERFORMANCE_LOGGER_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<File>${LOG_DIR}/performance.log</File>
+		<rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+			<fileNamePattern>${LOG_DIR}/test-gradle-logback-%i.log</fileNamePattern>
+			<minIndex>1</minIndex>
+			<maxIndex>30</maxIndex>
+		</rollingPolicy>
+		<triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+			<maxFileSize>100MB</maxFileSize>
+		</triggeringPolicy>
+		<encoder charset="UTF-8">
+			<Pattern>[%d{yyyy-MM-dd HH:mm:ss}] [%4level] %X{rpid} [%logger{50}]  -> %msg %n%ex</Pattern>
+		</encoder>
+	</appender>
+	
+	<appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
 		<File>${LOG_DIR}/test-gradle-logback.log</File>
 		<rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
 			<fileNamePattern>${LOG_DIR}/test-gradle-logback-%i.log</fileNamePattern>
@@ -97,7 +112,9 @@ Logback默认配置的步骤:
  		<appender-ref ref="FILE" />   
  	</logger>
  
- 	<logger name="com.zpeng.utils" level="error" addtivity="false">
+ 	<!-- 性能日志 -->
+ 	<logger name="performance_logger" level="debug" addtivity="false">
+ 		<appender-ref ref="PERFORMANCE_LOGGER_FILE" />   
  	</logger>
  	
  	<root level="debug">             
