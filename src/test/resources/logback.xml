@@ -46,6 +46,19 @@ Logback默认配置的步骤:
 	    </encoder>   
  	</appender> 
  	
+ 	 <!-- 按照每天生成日志文件 --> 
+    <appender name="FILE_DAYILY" class="ch.qos.logback.core.rolling.RollingFileAppender"> 
+        <Encoding>UTF-8</Encoding> 
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy"> 
+            <FileNamePattern>${LOG_HOME}/myApp.%d{yyyy-MM-dd}.log</FileNamePattern> 
+            <MaxHistory>30</MaxHistory> 
+        </rollingPolicy> 
+        <layout class="ch.qos.logback.classic.PatternLayout"> 
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n 
+            </pattern> 
+       </layout> 
+    </appender>   
+ 	
  	<appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
 		<File>${LOG_DIR}/test-gradle-logback.log</File>
 		<rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
