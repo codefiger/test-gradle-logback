@@ -24,8 +24,13 @@ public class LoggerDemo {
 		logger.info("{},it's OK.","Hi");//参数化
 		logger.info(MarkerFactory.getMarker("p2"), "value:{}", 1111);
 		logger.info(MarkerFactory.getMarker("marker has niao yong?"), "value:{}", 22222);
+		try {
+			LoggerBean loggerBean = new LoggerBean();
+		} catch (Exception e) {
+			logger.warn("异常", e);
+		}
 		
-		LoggerBean loggerBean = new LoggerBean();
+		
 		Random random = new Random();
 		int randomNum = random.nextInt();
 		System.out.println(randomNum);

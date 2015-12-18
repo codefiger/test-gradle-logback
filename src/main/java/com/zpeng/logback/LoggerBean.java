@@ -15,6 +15,7 @@ public class LoggerBean {
 		logger.error("error log content   ---");
 		logger.info(MarkerFactory.getMarker("p2"), "value:{}", 1);
 		logger.info(MarkerFactory.getMarker("marker has niao yong?"), "value:{}", 2);
+		throw new RuntimeException();
 	}
 	
 }
