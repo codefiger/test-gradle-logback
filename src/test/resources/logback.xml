@@ -39,8 +39,33 @@ Logback默认配置的步骤:
 	<!-- 获取时间戳字符串 -->
 	<timestamp key="timeFormat" datePattern="yyyy-MM-dd HH:mm:ss"/> 
 	
-	 <!-- 常用的Pattern变量,大家可打开该pattern进行输出观察 -->
-     <!-- 
+	<!-- xEx :stack track information followed by the "implementation-version" ,if the version is uncertain ,will be preceded by "~"-->
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">   
+   		<!-- encoder 默认配置为PatternLayoutEncoder -->   
+	    <encoder>   
+	      <pattern>[${timeFormat}] [%class:%line] - [%-4level] %X{rpid} [%logger{50}] -> %m %n %xEx</pattern>   
+	    </encoder>   
+ 	</appender> 
+ 	
+ 	 <!-- 按照每天生成日志文件 --> 
+    <appender name="LOG_DIR" class="ch.qos.logback.core.rolling.RollingFileAppender"> 
+        <Encoding>UTF-8</Encoding> 
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy"> 
+            <FileNamePattern>${LOG_DIR}/myApp.%d{yyyy-MM-dd}.log</FileNamePattern> 
+            <MaxHistory>30</MaxHistory> 
+        </rollingPolicy> 
+        <layout class="ch.qos.logback.classic.PatternLayout"> 
+            <pattern>[%d{yyyy-MM-dd HH:mm:ss}] [%4level] %X{rpid} [%logger{50}]  -> %m%n %xEx</pattern> 
+       </layout> 
+    </appender>   
+    
+    <appender name="STDOUT_DETAIL" class="ch.qos.logback.core.ConsoleAppender"> 
+    <!-- encoders are  by default assigned the type
+         ch.qos.logback.classic.encoder.PatternLayoutEncoder -->
+    <encoder>
+        
+        <!-- 常用的Pattern变量,大家可打开该pattern进行输出观察 -->
+        
           <pattern>
               %d{yyyy-MM-dd HH:mm:ss} [%level] - %msg%n
               Logger: %logger
@@ -58,29 +83,9 @@ Logback默认配置的步骤:
               rException: %rEx
               Marker: %marker
               %n
-              
           </pattern>
-    -->
-	
-	<!-- xex{depth} :stack track information followed by the "implementation-version" ,if the version is uncertain ,will be preceded by "~"-->
-	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">   
-   		<!-- encoder 默认配置为PatternLayoutEncoder -->   
-	    <encoder>   
-	      <pattern>[${timeFormat}] [%-4level] %X{rpid} [%logger{50}] -> %msg %n%xex{depth}</pattern>   
-	    </encoder>   
- 	</appender> 
- 	
- 	 <!-- 按照每天生成日志文件 --> 
-    <appender name="LOG_DIR" class="ch.qos.logback.core.rolling.RollingFileAppender"> 
-        <Encoding>UTF-8</Encoding> 
-        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy"> 
-            <FileNamePattern>${LOG_HOME}/myApp.%d{yyyy-MM-dd}.log</FileNamePattern> 
-            <MaxHistory>30</MaxHistory> 
-        </rollingPolicy> 
-        <layout class="ch.qos.logback.classic.PatternLayout"> 
-            <pattern>[%d{yyyy-MM-dd HH:mm:ss}] [%4level] %X{rpid} [%logger{50}]  -> %msg %n%xex{depth}</pattern> 
-       </layout> 
-    </appender>   
+    </encoder>
+  </appender>
  	
  	<appender name="PERFORMANCE_LOGGER_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
 		<File>${LOG_DIR}/performance.log</File>
@@ -93,7 +98,7 @@ Logback默认配置的步骤:
 			<maxFileSize>100MB</maxFileSize>
 		</triggeringPolicy>
 		<encoder charset="UTF-8">
-			<Pattern>[%d{yyyy-MM-dd HH:mm:ss}] [%4level] %X{rpid} [%logger{50}]  -> %msg %n%xex{depth}</Pattern>
+			<Pattern>[%d{yyyy-MM-dd HH:mm:ss}] [%4level] %X{rpid} [%logger{50}]  -> %m%n %xEx</Pattern>
 		</encoder>
 	</appender>
 	
@@ -108,7 +113,7 @@ Logback默认配置的步骤:
 			<maxFileSize>100MB</maxFileSize>
 		</triggeringPolicy>
 		<encoder charset="UTF-8">
-			<Pattern>[%d{yyyy-MM-dd HH:mm:ss}] [%4level] %X{rpid} [%logger{50}]  -> %msg %n%xex{depth}</Pattern>
+			<Pattern>[%d{yyyy-MM-dd HH:mm:ss}] [%4level] %X{rpid} [%logger{50}]  -> %m%n %xEx</Pattern>
 		</encoder>
 	</appender>
 	

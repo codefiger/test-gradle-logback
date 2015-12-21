@@ -2,11 +2,19 @@ package com.zpeng.utils;
 
 import java.util.Random;
 
+import org.apache.thrift.TException;
+import org.apache.thrift.protocol.TBinaryProtocol;
+import org.apache.thrift.protocol.TProtocol;
+import org.apache.thrift.transport.TSocket;
+import org.apache.thrift.transport.TTransport;
+import org.apache.thrift.transport.TTransportException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MarkerFactory;
 
 import com.zpeng.logback.LoggerBean;
+import com.zpeng.thrift.AdditionService;
+import com.zpeng.thrift.MyServer;
 
 public class LoggerDemo {
 	/**
@@ -35,5 +43,22 @@ public class LoggerDemo {
 		int randomNum = random.nextInt();
 		System.out.println(randomNum);
 		System.out.println(String.format("%08x", randomNum));
+		
+		
+		try {  
+			TTransport transport = new TSocket("localhost", MyServer.PORT);  
+			transport.open();  
+	   
+			TProtocol protocol = new TBinaryProtocol(transport);  
+			AdditionService.Client client = new AdditionService.Client(protocol);  
+	   
+			logger.info("101+200 result:{}",client.add(101, 200));  
+	   
+			transport.close();  
+		} catch (TTransportException e) {  
+			logger.info("TTransportException", e);   
+		} catch (TException x) {  
+			logger.info("TTransportException", x);   
+		}  
 	}
 }
