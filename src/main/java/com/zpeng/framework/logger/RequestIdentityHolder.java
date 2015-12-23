@@ -15,6 +15,8 @@ public class RequestIdentityHolder {
 		CallInfo callInfo = new CallInfo();
 		callInfo.setTraceId(getTraceId());
 		callInfo.setTime(new Date().getTime());
+		holder.set(callInfo);
+		org.slf4j.MDC.put("rpid", String.format("[rpid=%s]", callInfo.getTraceId()));
 	}
 	
 	public static CallInfo get() {
