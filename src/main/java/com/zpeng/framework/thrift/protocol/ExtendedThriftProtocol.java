@@ -65,7 +65,8 @@ public class ExtendedThriftProtocol extends TBinaryProtocol {
 	 */
 	@Override
 	public TMessage readMessageBegin() throws TException {
-		TMessage tm = super.readMessageBegin();
+		TMessage tm  = super.readMessageBegin();
+		
 		String originalMessageName = null;
 		Extension extension = new Extension();
 		String[] parts = tm.name.split(EXTENSION_BEGIN_MARK);
@@ -82,5 +83,15 @@ public class ExtendedThriftProtocol extends TBinaryProtocol {
 		callInfo.setTime(new Date().getTime());
 		RequestIdentityHolder.set(callInfo);
         return new TMessage(originalMessageName, tm.type, tm.seqid);
+	}
+
+	@Override
+	public void readMessageEnd() {
+		super.readMessageEnd();
+	}
+
+	@Override
+	public void writeMessageEnd() {
+		super.writeMessageEnd();
 	}
 }

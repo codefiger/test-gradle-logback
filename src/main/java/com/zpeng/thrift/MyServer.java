@@ -1,12 +1,15 @@
 package com.zpeng.thrift;
 
-import org.apache.thrift.transport.TServerSocket; 
-import org.apache.thrift.transport.TServerTransport;
+import org.apache.thrift.server.TServer;
+import org.apache.thrift.server.TServer.Args;
+import org.apache.thrift.server.TSimpleServer;
+import org.apache.thrift.server.TThreadedSelectorServer;
+import org.apache.thrift.transport.TFramedTransport;
+import org.apache.thrift.transport.TNonblockingServerSocket;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.apache.thrift.server.TServer; 
-import org.apache.thrift.server.TServer.Args; 
-import org.apache.thrift.server.TSimpleServer; 
+
+import com.zpeng.framework.thrift.protocol.ExtendedThriftProtocolFactory; 
    
 /**
  * a simple server,start first
@@ -19,16 +22,27 @@ public class MyServer {
 	
 	public static void StartsimpleServer(AdditionService.Processor<AdditionServiceHandler> processor) { 
 		try { 
-			TServerTransport serverTransport = new TServerSocket(PORT); 
-		    TServer server = new TSimpleServer(new Args(serverTransport).processor(processor)); 
+			TNonblockingServerSocket serverTransport = new TNonblockingServerSocket(PORT); 
+			
+			//使用自定义thrift传输协议 带有traceId
+			TThreadedSelectorServer.Args serverArgs = new TThreadedSelectorServer.Args(serverTransport)
+							                    .inputTransportFactory(new TFramedTransport.Factory())
+							                    .outputTransportFactory(new TFramedTransport.Factory())
+							                    .inputProtocolFactory(new ExtendedThriftProtocolFactory(true, true, 64*1024))
+							                    .outputProtocolFactory(new ExtendedThriftProtocolFactory(true, true, 64*1024))
+							                    .processor(processor)
+							                    .selectorThreads(2);
+			
+			TThreadedSelectorServer server = new TThreadedSelectorServer(serverArgs);
 		   
 		    // Use this for a multithreaded server 
 		    // TServer server = new TThreadPoolServer(new 
 		    // TThreadPoolServer.Args(serverTransport).processor(processor)); 
 		   
 		    logger.info("Starting the simple server..."); 
-		    server.serve();
 		    logger.info("Start successful!"); 
+		    server.serve();
+		    
 	    } catch (Exception e) { 
 		    e.printStackTrace(); 
 	    } 
