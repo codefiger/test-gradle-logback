@@ -48,7 +48,7 @@ Logback默认配置的步骤:
  	</appender> 
  	
  	 <!-- 按照每天生成日志文件 --> 
-    <appender name="LOG_DIR" class="ch.qos.logback.core.rolling.RollingFileAppender"> 
+    <appender name="LOG_DAILY" class="ch.qos.logback.core.rolling.RollingFileAppender"> 
         <Encoding>UTF-8</Encoding> 
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy"> 
             <FileNamePattern>${LOG_DIR}/myApp.%d{yyyy-MM-dd}.log</FileNamePattern> 
