@@ -50,3 +50,37 @@ dependencies{
 	)
 }
 
+sourceSets{
+	main{
+		java{
+			srcDir 'src/main/java'
+		}
+	}
+}
+def genThriftDir = "$projectDir/src/main/java/com/zpeng/gen/thrift"
+def genDir = "$projectDir/src/main/java"
+task emptyGenThriftJava << {
+	ant.delete(dir: genThriftDir)
+	ant.mkdir(dir: genThriftDir)
+}
+
+task innerGenerateThrift() << {
+	
+	def projectPath = "$projectDir/src/main/resources/thrift/pojo"
+	println projectPath;
+	ext{
+		thriftFiles = fileTree(dir:projectPath).matching{include '*.thrift'}
+	}
+	thriftFiles.collect{ it }.each{
+		def fpath = it.toString()
+		println fpath;
+		exec {
+			executable = 'thrift'
+    		args = ['-r','--gen', 'java:hashcode', '-out', genDir, fpath]
+		}
+	}
+}
+task gengerateThrift (dependsOn:[emptyGenThriftJava, innerGenerateThrift]) << {}
+
+task generate(dependsOn:[gengerateThrift]){}
+
