@@ -22,4 +22,5 @@ namespace java com.zpeng.gen.thrift.pojo
 	//生成命令：在thrift文件路径下执行thrift --gen java:hashcode -out /home/peng.zhang/zpeng/test/testWorksapce/test-gradle-logback/src/main/java helloworld.thrift
 struct Emotion{
 	10:optional string name;
+	20:optional string type;
 }

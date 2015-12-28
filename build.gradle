@@ -66,7 +66,7 @@ task emptyGenThriftJava << {
 
 task innerGenerateThrift() << {
 	
-	def projectPath = "$projectDir/src/main/resources/thrift/pojo"
+	def projectPath = "$projectDir/src/main/resources/thrift/service"
 	println projectPath;
 	ext{
 		thriftFiles = fileTree(dir:projectPath).matching{include '*.thrift'}

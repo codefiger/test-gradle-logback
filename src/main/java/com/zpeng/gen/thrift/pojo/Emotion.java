@@ -35,6 +35,7 @@ public class Emotion implements org.apache.thrift.TBase<Emotion, Emotion._Fields
   private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("Emotion");
 
   private static final org.apache.thrift.protocol.TField NAME_FIELD_DESC = new org.apache.thrift.protocol.TField("name", org.apache.thrift.protocol.TType.STRING, (short)10);
+  private static final org.apache.thrift.protocol.TField TYPE_FIELD_DESC = new org.apache.thrift.protocol.TField("type", org.apache.thrift.protocol.TType.STRING, (short)20);
 
   private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
   static {
@@ -43,10 +44,12 @@ public class Emotion implements org.apache.thrift.TBase<Emotion, Emotion._Fields
   }
 
   public String name; // optional
+  public String type; // optional
 
   /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
   public enum _Fields implements org.apache.thrift.TFieldIdEnum {
-    NAME((short)10, "name");
+    NAME((short)10, "name"),
+    TYPE((short)20, "type");
 
     private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
 
@@ -63,6 +66,8 @@ public class Emotion implements org.apache.thrift.TBase<Emotion, Emotion._Fields
       switch(fieldId) {
         case 10: // NAME
           return NAME;
+        case 20: // TYPE
+          return TYPE;
         default:
           return null;
       }
@@ -103,11 +108,13 @@ public class Emotion implements org.apache.thrift.TBase<Emotion, Emotion._Fields
   }
 
   // isset id assignments
-  private _Fields optionals[] = {_Fields.NAME};
+  private _Fields optionals[] = {_Fields.NAME,_Fields.TYPE};
   public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
   static {
     Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
     tmpMap.put(_Fields.NAME, new org.apache.thrift.meta_data.FieldMetaData("name", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+        new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
+    tmpMap.put(_Fields.TYPE, new org.apache.thrift.meta_data.FieldMetaData("type", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
     metaDataMap = Collections.unmodifiableMap(tmpMap);
     org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(Emotion.class, metaDataMap);
@@ -123,6 +130,9 @@ public class Emotion implements org.apache.thrift.TBase<Emotion, Emotion._Fields
     if (other.isSetName()) {
       this.name = other.name;
     }
+    if (other.isSetType()) {
+      this.type = other.type;
+    }
   }
 
   public Emotion deepCopy() {
@@ -132,6 +142,7 @@ public class Emotion implements org.apache.thrift.TBase<Emotion, Emotion._Fields
   @Override
   public void clear() {
     this.name = null;
+    this.type = null;
   }
 
   public String getName() {
@@ -158,6 +169,30 @@ public class Emotion implements org.apache.thrift.TBase<Emotion, Emotion._Fields
     }
   }
 
+  public String getType() {
+    return this.type;
+  }
+
+  public Emotion setType(String type) {
+    this.type = type;
+    return this;
+  }
+
+  public void unsetType() {
+    this.type = null;
+  }
+
+  /** Returns true if field type is set (has been assigned a value) and false otherwise */
+  public boolean isSetType() {
+    return this.type != null;
+  }
+
+  public void setTypeIsSet(boolean value) {
+    if (!value) {
+      this.type = null;
+    }
+  }
+
   public void setFieldValue(_Fields field, Object value) {
     switch (field) {
     case NAME:
@@ -168,6 +203,14 @@ public class Emotion implements org.apache.thrift.TBase<Emotion, Emotion._Fields
       }
       break;
 
+    case TYPE:
+      if (value == null) {
+        unsetType();
+      } else {
+        setType((String)value);
+      }
+      break;
+
     }
   }
 
@@ -175,6 +218,9 @@ public class Emotion implements org.apache.thrift.TBase<Emotion, Emotion._Fields
     switch (field) {
     case NAME:
       return getName();
+
+    case TYPE:
+      return getType();
 
     }
     throw new IllegalStateException();
@@ -189,6 +235,8 @@ public class Emotion implements org.apache.thrift.TBase<Emotion, Emotion._Fields
     switch (field) {
     case NAME:
       return isSetName();
+    case TYPE:
+      return isSetType();
     }
     throw new IllegalStateException();
   }
@@ -215,6 +263,15 @@ public class Emotion implements org.apache.thrift.TBase<Emotion, Emotion._Fields
         return false;
     }
 
+    boolean this_present_type = true && this.isSetType();
+    boolean that_present_type = true && that.isSetType();
+    if (this_present_type || that_present_type) {
+      if (!(this_present_type && that_present_type))
+        return false;
+      if (!this.type.equals(that.type))
+        return false;
+    }
+
     return true;
   }
 
@@ -226,6 +283,11 @@ public class Emotion implements org.apache.thrift.TBase<Emotion, Emotion._Fields
     builder.append(present_name);
     if (present_name)
       builder.append(name);
+
+    boolean present_type = true && (isSetType());
+    builder.append(present_type);
+    if (present_type)
+      builder.append(type);
 
     return builder.toHashCode();
   }
@@ -244,6 +306,16 @@ public class Emotion implements org.apache.thrift.TBase<Emotion, Emotion._Fields
     }
     if (isSetName()) {
       lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.name, typedOther.name);
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+    }
+    lastComparison = Boolean.valueOf(isSetType()).compareTo(typedOther.isSetType());
+    if (lastComparison != 0) {
+      return lastComparison;
+    }
+    if (isSetType()) {
+      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.type, typedOther.type);
       if (lastComparison != 0) {
         return lastComparison;
       }
@@ -274,6 +346,16 @@ public class Emotion implements org.apache.thrift.TBase<Emotion, Emotion._Fields
         sb.append("null");
       } else {
         sb.append(this.name);
+      }
+      first = false;
+    }
+    if (isSetType()) {
+      if (!first) sb.append(", ");
+      sb.append("type:");
+      if (this.type == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.type);
       }
       first = false;
     }
@@ -328,6 +410,14 @@ public class Emotion implements org.apache.thrift.TBase<Emotion, Emotion._Fields
               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
             }
             break;
+          case 20: // TYPE
+            if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
+              struct.type = iprot.readString();
+              struct.setTypeIsSet(true);
+            } else { 
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+            }
+            break;
           default:
             org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
         }
@@ -347,6 +437,13 @@ public class Emotion implements org.apache.thrift.TBase<Emotion, Emotion._Fields
         if (struct.isSetName()) {
           oprot.writeFieldBegin(NAME_FIELD_DESC);
           oprot.writeString(struct.name);
+          oprot.writeFieldEnd();
+        }
+      }
+      if (struct.type != null) {
+        if (struct.isSetType()) {
+          oprot.writeFieldBegin(TYPE_FIELD_DESC);
+          oprot.writeString(struct.type);
           oprot.writeFieldEnd();
         }
       }
@@ -371,19 +468,29 @@ public class Emotion implements org.apache.thrift.TBase<Emotion, Emotion._Fields
       if (struct.isSetName()) {
         optionals.set(0);
       }
-      oprot.writeBitSet(optionals, 1);
+      if (struct.isSetType()) {
+        optionals.set(1);
+      }
+      oprot.writeBitSet(optionals, 2);
       if (struct.isSetName()) {
         oprot.writeString(struct.name);
+      }
+      if (struct.isSetType()) {
+        oprot.writeString(struct.type);
       }
     }
 
     @Override
     public void read(org.apache.thrift.protocol.TProtocol prot, Emotion struct) throws org.apache.thrift.TException {
       TTupleProtocol iprot = (TTupleProtocol) prot;
-      BitSet incoming = iprot.readBitSet(1);
+      BitSet incoming = iprot.readBitSet(2);
       if (incoming.get(0)) {
         struct.name = iprot.readString();
         struct.setNameIsSet(true);
+      }
+      if (incoming.get(1)) {
+        struct.type = iprot.readString();
+        struct.setTypeIsSet(true);
       }
     }
   }
